@@ -3,51 +3,82 @@ package com.grocberry.user;
 
 
 import javax.ws.rs.*;
-
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import io.swagger.annotations.*;
 import org.bson.Document;
+import com.grocberry.raspberry.raspberry;
 
 /**
  * Created by Voodoo on 27/11/15.
  */
-@Path("user")
+@Api(value = "User")
+@Path("/user/")
 public class User {
+
+    int is_registered=0;
+    MongoClientURI connectionString = new MongoClientURI("mongodb://voodoo:722446@ds059804.mongolab.com:59804/grocberry");
+    MongoClient mongoClient = new MongoClient(connectionString);
+    MongoDatabase db = mongoClient.getDatabase(connectionString.getDatabase());
 
     @GET
     @Path("/checkuser")
     @Produces("application/json")
-    public String checkuser(@QueryParam("id") Long id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform") String platform) {
-        MongoClientURI connectionString = new MongoClientURI("mongodb://voodoo:722446@ds059804.mongolab.com:59804/grocberry");
-        MongoClient mongoClient = new MongoClient(connectionString);
-        MongoDatabase db = mongoClient.getDatabase(connectionString.getDatabase());
-        MongoCollection<Document> collection = db.getCollection("user");
+    @ApiOperation(value = "checkUser")
+    public String checkUser(@QueryParam("user_id") Long user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
 
-        FindIterable<Document> iterable = db.getCollection("user").find(new Document("user_id", id));
 
+
+        FindIterable<Document> iterable = db.getCollection("user").find(new Document("user_id", user_id));
         iterable.forEach(new Block<Document>() {
             @Override
             public void apply(final Document document) {
-                System.out.println("yooooo");
-                System.out.println(document);
+                is_registered=1;
+                System.out.println(document.get("name"));
             }
+
         });
 
+        raspberry rs=new raspberry();
+        System.out.println("flag is "+is_registered);
+        if(is_registered==0)
+        {
+            Boolean is_Added=addUser(user_id,name,email,platform);
+            if(is_Added==true) {
+                return "user added";
+            }else
+            {
+                return "Some error occurred user not added";
+            }
+        }
+        else{
+            String msg=rs.fetchRaspberry(user_id);
+            return msg;
+        }
+    }
 
 
-        /*if(id!=null && name!=null && email!=null && platform!=null){
-            Document doc = new Document("user_id", id)
-                    .append("name", name)
-                    .append("email_id", email)
-                    .append("platform", platform);
-            collection.insertOne(doc);
-            return String.valueOf(id);
-        }*/
-
-        return String.valueOf("something is null");
+    public boolean addUser(Long user_id, String name,String email, String platform ){
+        MongoCollection<Document> collection = db.getCollection("user");
+        try {
+            if (user_id != null && name != null && platform != null) {
+                Document doc = new Document("user_id", user_id)
+                        .append("name", name)
+                        .append("email_id", email)
+                        .append("platform", platform);
+                collection.insertOne(doc);
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
