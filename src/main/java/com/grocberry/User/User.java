@@ -28,7 +28,7 @@ public class User {
     @GET
     @Path("/checkuser")
     @Produces("application/json")
-    @ApiOperation(value = "checkUser")
+    @ApiOperation(value = "check if user exists and return the raspberry pi available...if user doesn't exist this function will add a new user")
     public String checkUser(@QueryParam("user_id") Long user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
 
 

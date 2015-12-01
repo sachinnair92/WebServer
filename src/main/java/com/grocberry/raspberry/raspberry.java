@@ -32,7 +32,7 @@ public class raspberry {
     @GET
     @Path("/addraspberry")
     @Produces("application/json")
-    @ApiOperation(value = "addRaspberry")
+    @ApiOperation(value = "Use this to add new raspberry pi for a specific user")
     public String addRaspberry(@QueryParam("user_id") Long user_id,@QueryParam("rasp_id") Long rasp_id){
 
         try {
@@ -66,6 +66,7 @@ public class raspberry {
 
                     obj = new JSONObject();
                     obj.put("user_id", document.get("user_id"));
+                    obj.put("no_of_raspberry", no_of_raspberry);
                     System.out.println(obj.toString());
                     for (int i = 1; i <= no_of_raspberry; i++) {
                         obj.put("rasp" + i + "_id", document.get("rasp" + i + "_id"));
