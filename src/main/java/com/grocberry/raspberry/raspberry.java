@@ -11,6 +11,7 @@ import org.bson.Document;
 import org.json.JSONObject;
 
 import javax.ws.rs.*;
+import java.math.BigInteger;
 
 /**
  * Created by Voodoo on 29/11/15.
@@ -33,7 +34,7 @@ public class raspberry {
     @Path("/addraspberry")
     @Produces("application/json")
     @ApiOperation(value = "Use this to add new raspberry pi for a specific user")
-    public String addRaspberry(@QueryParam("user_id") Long user_id,@QueryParam("rasp_id") Long rasp_id){
+    public String addRaspberry(@QueryParam("user_id") BigInteger user_id,@QueryParam("rasp_id") Long rasp_id){
 
         try {
             MongoCollection<Document> collection = db.getCollection("raspberry");
@@ -55,7 +56,7 @@ public class raspberry {
     }
 
 
-    public String fetchRaspberry(Long user_id) {
+    public String fetchRaspberry(BigInteger user_id) {
         try {
             FindIterable<Document> iterable = db.getCollection("raspberry").find(new Document("user_id", user_id));
             iterable.forEach(new Block<Document>() {
