@@ -32,6 +32,10 @@ public class User {
     public String checkUser(@QueryParam("user_id") Long user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
 
 
+        if(name.contains("%20"))
+        {
+            name=name.replace("%20"," ");
+        }
 
         FindIterable<Document> iterable = db.getCollection("user").find(new Document("user_id", user_id));
         iterable.forEach(new Block<Document>() {
