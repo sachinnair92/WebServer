@@ -31,13 +31,8 @@ public class User {
     @Path("/checkuser")
     @Produces("application/json")
     @ApiOperation(value = "check if user exists and return the raspberry pi available...if user doesn't exist this function will add a new user")
-    public String checkUser(@QueryParam("user_id") BigInteger user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
+    public String checkUser(@QueryParam("user_id") String user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
 
-
-        if(name.contains("%20"))
-        {
-            name=name.replace("%20"," ");
-        }
 
         FindIterable<Document> iterable = db.getCollection("user").find(new Document("user_id", user_id));
         iterable.forEach(new Block<Document>() {
@@ -68,7 +63,7 @@ public class User {
     }
 
 
-    public boolean addUser(BigInteger user_id, String name,String email, String platform ){
+    public boolean addUser(String user_id, String name,String email, String platform ){
         MongoCollection<Document> collection = db.getCollection("user");
         try {
             if (user_id != null && name != null && platform != null) {

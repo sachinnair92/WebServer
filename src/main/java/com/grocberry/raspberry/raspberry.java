@@ -56,7 +56,7 @@ public class raspberry {
     }
 
 
-    public String fetchRaspberry(BigInteger user_id) {
+    public String fetchRaspberry(String user_id) {
         try {
             FindIterable<Document> iterable = db.getCollection("raspberry").find(new Document("user_id", user_id));
             iterable.forEach(new Block<Document>() {
@@ -68,7 +68,6 @@ public class raspberry {
                     obj = new JSONObject();
                     obj.put("user_id", document.get("user_id"));
                     obj.put("no_of_raspberry", no_of_raspberry);
-                    System.out.println(obj.toString());
                     for (int i = 1; i <= no_of_raspberry; i++) {
                         obj.put("rasp" + i + "_id", document.get("rasp" + i + "_id"));
                         obj.put("rasp" + i + "_name", document.get("rasp" + i + "_name"));
