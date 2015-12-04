@@ -13,6 +13,8 @@ import io.swagger.annotations.*;
 import org.bson.Document;
 import com.grocberry.raspberry.raspberry;
 
+import java.math.BigInteger;
+
 /**
  * Created by Voodoo on 27/11/15.
  */
@@ -29,7 +31,7 @@ public class User {
     @Path("/checkuser")
     @Produces("application/json")
     @ApiOperation(value = "check if user exists and return the raspberry pi available...if user doesn't exist this function will add a new user")
-    public String checkUser(@QueryParam("user_id") Long user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
+    public String checkUser(@QueryParam("user_id") BigInteger user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
 
 
         if(name.contains("%20"))
@@ -66,7 +68,7 @@ public class User {
     }
 
 
-    public boolean addUser(Long user_id, String name,String email, String platform ){
+    public boolean addUser(BigInteger user_id, String name,String email, String platform ){
         MongoCollection<Document> collection = db.getCollection("user");
         try {
             if (user_id != null && name != null && platform != null) {
