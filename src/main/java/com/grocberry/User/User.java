@@ -12,6 +12,7 @@ import com.mongodb.client.MongoDatabase;
 import io.swagger.annotations.*;
 import org.bson.Document;
 import com.grocberry.raspberry.raspberry;
+import org.json.JSONObject;
 
 import java.math.BigInteger;
 
@@ -33,7 +34,7 @@ public class User {
     @ApiOperation(value = "check if user exists and return the raspberry pi available...if user doesn't exist this function will add a new user")
     public String checkUser(@QueryParam("user_id") String user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
 
-
+        JSONObject obj= new JSONObject();;
         FindIterable<Document> iterable = db.getCollection("user").find(new Document("user_id", user_id));
         iterable.forEach(new Block<Document>() {
             @Override
@@ -50,15 +51,27 @@ public class User {
         {
             Boolean is_Added=addUser(user_id,name,email,platform);
             if(is_Added==true) {
-                return "user added";
+                obj.put("message", "user added");
+                return String.valueOf(obj);
             }else
             {
-                return "Some error occurred user not added";
+                obj.put("message", "Some error occurred user not added");
+                return String.valueOf(obj);
             }
         }
         else{
             String msg=rs.fetchRaspberry(user_id);
-            return msg;
+
+            if(msg.equals("No raspberry added")||msg.equals("Some error occurred"))
+            {
+                obj.put("message", msg);
+                return String.valueOf(obj);
+            }else
+            {
+                return msg;
+            }
+
+
         }
     }
 
