@@ -36,14 +36,14 @@ public class raspberry {
     @Path("/addraspberry")
     @Produces("application/json")
     @ApiOperation(value = "Use this to add new raspberry pi for a specific user")
-    public String addRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_id,@QueryParam("rasp_name") String rasp_name){
+    public String addRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
 
         try {
 
                 MongoCollection<Document> collection = db.getCollection("raspberry");
-                if (user_id != null && rasp_id != null && rasp_name !=null) {
+                if (user_id != null && rasp_serial_no != null && rasp_name !=null) {
                     Document doc = new Document("user_id", user_id)
-                                .append("rasp_serial", rasp_id)
+                                .append("rasp_serial_no", rasp_serial_no)
                                 .append("rasp_name",rasp_name);
                     collection.insertOne(doc);
                     return "true";
@@ -72,8 +72,8 @@ public class raspberry {
                     {
                         obj.put("user_id", document.get("user_id"));
                     }
-                    obj.put("rasp" + (flag+1) + "_id", document.get("rasp" + (flag+1) + "_id"));
-                    obj.put("rasp" + (flag+1) + "_name", document.get("rasp" + (flag+1) + "_name"));
+                    obj.put("rasp" + (flag+1) + "_serial_no", document.get("rasp_serial_no"));
+                    obj.put("rasp" + (flag+1) + "_name", document.get("rasp_name"));
 
                     flag++;
                 }
