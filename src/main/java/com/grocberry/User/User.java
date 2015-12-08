@@ -40,13 +40,11 @@ public class User {
             @Override
             public void apply(final Document document) {
                 is_registered=1;
-                System.out.println(document.get("name"));
             }
 
         });
 
         raspberry rs=new raspberry();
-        System.out.println("flag is "+is_registered);
         if(is_registered==0)
         {
             Boolean is_Added=addUser(user_id,name,email,platform);
