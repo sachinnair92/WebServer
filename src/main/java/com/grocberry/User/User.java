@@ -9,6 +9,7 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.UpdateResult;
 import io.swagger.annotations.*;
 import org.bson.Document;
 import com.grocberry.raspberry.raspberry;
@@ -27,14 +28,14 @@ public class User {
     MongoClientURI connectionString = new MongoClientURI("mongodb://voodoo:722446@ds059804.mongolab.com:59804/grocberry");
     MongoClient mongoClient = new MongoClient(connectionString);
     MongoDatabase db = mongoClient.getDatabase(connectionString.getDatabase());
-
+    JSONObject obj;
     @GET
     @Path("/checkuser")
     @Produces("application/json")
-    @ApiOperation(value = "check if user exists and return the raspberry pi available...if user doesn't exist this function will add a new user")
+    @ApiOperation(value = "check if user exists and return the raspberry pi available.If user doesn't exist this function will add a new user")
     public String checkUser(@QueryParam("user_id") String user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
-
-        JSONObject obj= new JSONObject();;
+        obj= new JSONObject();
+        is_registered=0;
         FindIterable<Document> iterable = db.getCollection("user").find(new Document("user_id", user_id));
         iterable.forEach(new Block<Document>() {
             @Override
@@ -71,6 +72,41 @@ public class User {
 
 
         }
+    }
+
+    @GET
+    @Path("/getUserInfo")
+    @Produces("application/json")
+    @ApiOperation(value = "This api fetched the details of a particular user")
+    public String getUserInfo(@QueryParam("user_id") String user_id){
+
+        try {
+
+            obj= new JSONObject();
+            is_registered=0;
+            FindIterable<Document> iterable = db.getCollection("user").find(new Document("user_id", user_id));
+            iterable.forEach(new Block<Document>() {
+                @Override
+                public void apply(final Document document) {
+                    is_registered=1;
+                    document.get("user_id");
+                    obj.put("user_id", document.get("user_id"));
+                    obj.put("name", document.get("name"));
+                    obj.put("email_id", document.get("email_id"));
+                    obj.put("platform", document.get("platform"));
+                }
+            });
+            if(is_registered==1)
+            {
+                return String.valueOf(obj);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        obj.put("message", "user not found");
+        return String.valueOf(obj);
     }
 
 
