@@ -29,7 +29,14 @@
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
-
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>com.grocberry.Filter.RestAuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/api/*</url-pattern>
+    </filter-mapping>
 
     <servlet>
         <servlet-name>Jersey2Config</servlet-name>
