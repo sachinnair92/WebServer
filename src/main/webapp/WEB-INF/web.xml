@@ -7,7 +7,8 @@
         <servlet-name>Jersey</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
         <init-param>
-            <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+            <!--<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>-->
+            <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
             <param-value>com.grocberry.Filter.ResponseCorsFilter</param-value>
         </init-param>
         <init-param>
@@ -29,6 +30,7 @@
     </servlet-mapping>
 
 
+
     <servlet>
         <servlet-name>Jersey2Config</servlet-name>
         <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
@@ -38,7 +40,7 @@
         </init-param>
         <init-param>
             <param-name>swagger.api.basepath</param-name>
-            <param-value>http://localhost:8080/api</param-value>
+            <param-value>https://grocberry-webserver.herokuapp.com/api</param-value>
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>
