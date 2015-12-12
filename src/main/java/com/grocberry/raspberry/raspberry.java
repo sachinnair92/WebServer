@@ -7,6 +7,9 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import io.swagger.annotations.*;
+import org.bson.BSON;
+import org.bson.BsonDocument;
+import org.bson.BsonString;
 import org.bson.Document;
 import org.json.JSONObject;
 
@@ -58,8 +61,26 @@ public class raspberry {
         return "false";
     }
 
+    @GET
+    @Path("/removeraspberry")
+    @Produces("application/json")
+    @ApiOperation(value = "Use this to remove raspberry pi for a specific user")
+    public String removeRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no) {
+        try {
+            BsonDocument bdoc=new BsonDocument().append("user_id", new BsonString(user_id)).append("rasp_serial_no",new BsonString(String.valueOf(rasp_serial_no)));
+            collection.deleteOne(bdoc);
+            return "false";
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return "false";
+    }
 
-    public String fetchRaspberry(String user_id) {
+
+
+        public String fetchRaspberry(String user_id) {
         try {
             FindIterable<Document> iterable = db.getCollection("raspberry").find(new Document("user_id", user_id));
             flag=0;
