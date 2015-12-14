@@ -30,7 +30,7 @@ public class User {
     MongoDatabase db = mongoClient.getDatabase(connectionString.getDatabase());
     JSONObject obj;
     @GET
-    @Path("/checkuser")
+    @Path("/checkUser")
     @Produces("application/json")
     @ApiOperation(value = "check if user exists and return the raspberry pi available.If user doesn't exist this function will add a new user")
     public String checkUser(@QueryParam("user_id") String user_id,@QueryParam("name") String name,@QueryParam("email") String email,@QueryParam("platform")  String platform) {
@@ -77,7 +77,7 @@ public class User {
     @GET
     @Path("/getUserInfo")
     @Produces("application/json")
-    @ApiOperation(value = "This api fetched the details of a particular user")
+    @ApiOperation(value = "This api fetches the details of a particular user")
     public String getUserInfo(@QueryParam("user_id") String user_id){
 
         try {

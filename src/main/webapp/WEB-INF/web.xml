@@ -17,6 +17,7 @@
                 io.swagger.jaxrs.listing,
                 com.grocberry.user,
                 com.grocberry.raspberry,
+                com.grocberry.container,
                 com.grocberry.Filter
             </param-value>
         </init-param>
@@ -29,14 +30,14 @@
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
 
-    <filter>
+    <!--<filter>
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>com.grocberry.Filter.RestAuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/api/*</url-pattern>
-    </filter-mapping>
+    </filter-mapping>-->
 
     <servlet>
         <servlet-name>Jersey2Config</servlet-name>
@@ -48,6 +49,7 @@
         <init-param>
             <param-name>swagger.api.basepath</param-name>
             <param-value>https://grocberry-webserver.herokuapp.com/api</param-value>
+           <!-- <param-value>http://localhost:5000/api</param-value>-->
         </init-param>
         <load-on-startup>2</load-on-startup>
     </servlet>

@@ -39,7 +39,7 @@ public class raspberry {
 
 
     @GET
-    @Path("/addraspberry")
+    @Path("/addRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api adds new raspberry pi for a specific user")
     public String addRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
@@ -85,7 +85,7 @@ public class raspberry {
     }
 
     @GET
-    @Path("/removeraspberry")
+    @Path("/removeRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api removes raspberry pi")
     public String removeRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no) {
@@ -109,7 +109,7 @@ public class raspberry {
 
 
     @GET
-    @Path("/editraspberry")
+    @Path("/editRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api edits the name of a particular raspberry pi")
     public String editRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
