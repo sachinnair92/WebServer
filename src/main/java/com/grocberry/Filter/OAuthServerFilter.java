@@ -6,8 +6,8 @@ import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.Provider;
+import javax.xml.bind.DatatypeConverter;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.StringTokenizer;
 
 /**
@@ -31,7 +31,13 @@ public class OAuthServerFilter implements ContainerRequestFilter {
         System.out.println("encoded userpass is "+encodedUserPassword);
         String usernameAndPassword = null;
         try {
-            byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
+
+            byte[] message = "hello world".getBytes("UTF-8");
+            byte[] decodedBytes = DatatypeConverter.parseBase64Binary(encodedUserPassword);
+
+
+
+            //byte[] decodedBytes = Base64.getDecoder().decode(encodedUserPassword);
             usernameAndPassword = new String(decodedBytes, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
