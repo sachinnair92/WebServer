@@ -153,7 +153,8 @@ public class raspberry {
                 }
 
             });
-            obj.put("no_of_raspberry",flag);
+            obj.put("no_of_raspberry", flag);
+            obj.put("message", "fetched");
             if (israspberryadded) {
                 return String.valueOf(obj);
             } else {
