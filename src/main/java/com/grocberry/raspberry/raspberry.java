@@ -133,6 +133,106 @@ public class raspberry {
     }
 
 
+    @GET
+    @Path("/checkRaspberry")
+    @Produces("application/json")
+    @ApiOperation(value = "This api checks if raspberry is added to server")
+    public String checkRaspberry(@QueryParam("rasp_id") Long rasp_serial_no){
+
+        try {
+            obj = new JSONObject();
+            is_added=0;
+            MongoCollection<Document> collection1 = db.getCollection("raspberryList");
+            FindIterable<Document> iterable = collection1.find(new Document("rasp_serial_no", rasp_serial_no));
+            iterable.forEach(new Block<Document>() {
+                @Override
+                public void apply(final Document document) {
+                    is_added=1;
+                }
+
+            });
+
+
+
+            if(is_added==1) {
+                    obj.put("message", "true");
+                    return String.valueOf(obj);
+            }
+            else
+            {
+                obj.put("message", "false");
+                return String.valueOf(obj);
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        obj.put("message", "false");
+        return String.valueOf(obj);
+    }
+
+    @GET
+    @Path("/checkRaspberry")
+    @Produces("application/json")
+    @ApiOperation(value = "This api updates the ip address of the raspberry pi (Dont use this)")
+    public String updateRaspberryList(@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_ip") Long rasp_ip){
+
+        try {
+            obj = new JSONObject();
+            is_added=0;
+            MongoCollection<Document> collection1 = db.getCollection("raspberryList");
+            FindIterable<Document> iterable = collection1.find(new Document("rasp_serial_no", rasp_serial_no));
+            iterable.forEach(new Block<Document>() {
+                @Override
+                public void apply(final Document document) {
+                    is_added=1;
+                }
+
+            });
+
+
+
+            if(is_added==1) {
+
+                if (rasp_serial_no != null && rasp_ip!=null) {
+                    UpdateResult ur = collection1.updateOne(new Document("rasp_serial_no", rasp_serial_no), new Document("$set", new Document("rasp_ip", rasp_ip)));
+
+                    if (ur.getModifiedCount() != 0) {
+                        obj.put("message", "true");
+                        return String.valueOf(obj);
+                    }
+                }
+
+                obj.put("message", "false");
+                return String.valueOf(obj);
+            }
+            else
+            {
+                    if (rasp_serial_no != null && rasp_ip!=null) {
+                        Document doc = new Document("rasp_serial_no", rasp_serial_no)
+                                .append("rasp_ip", rasp_ip);
+                        collection1.insertOne(doc);
+                        obj.put("message", "true");
+                        return String.valueOf(obj);
+                    }
+
+                obj.put("message", "false");
+                return String.valueOf(obj);
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        obj.put("message", "false");
+        return String.valueOf(obj);
+    }
+
+
+
         public String fetchRaspberry(String user_id) {
         try {
             FindIterable<Document> iterable = collection.find(new Document("user_id", user_id));
