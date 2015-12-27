@@ -41,7 +41,7 @@ public class raspberry {
     @GET
     @Path("/addRaspberry")
     @Produces("application/json")
-    @ApiOperation(value = "This api adds new raspberry pi for a specific user")
+    @ApiOperation(value = "This api adds new raspberry pi for a specific user (Before adding check if raspberry is added to server)")
     public String addRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
 
         try {
