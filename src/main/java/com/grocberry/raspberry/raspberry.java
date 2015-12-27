@@ -42,7 +42,7 @@ public class raspberry {
     @Path("/addRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api adds new raspberry pi for a specific user")
-    public String addRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
+    public String addRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
 
         try {
                obj = new JSONObject();
@@ -88,7 +88,7 @@ public class raspberry {
     @Path("/removeRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api removes raspberry pi")
-    public String removeRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no) {
+    public String removeRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") String rasp_serial_no) {
         try {
             obj = new JSONObject();
             if (user_id != null && rasp_serial_no != null) {
@@ -112,7 +112,7 @@ public class raspberry {
     @Path("/editRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api edits the name of a particular raspberry pi")
-    public String editRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
+    public String editRaspberry(@QueryParam("user_id") String user_id,@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("rasp_name") String rasp_name){
         try {
             obj = new JSONObject();
             if (user_id != null && rasp_serial_no != null && rasp_name !=null) {
@@ -137,7 +137,7 @@ public class raspberry {
     @Path("/checkRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api checks if raspberry is added to server")
-    public String checkRaspberry(@QueryParam("rasp_id") Long rasp_serial_no){
+    public String checkRaspberry(@QueryParam("rasp_id") String rasp_serial_no){
 
         try {
             obj = new JSONObject();
@@ -177,7 +177,7 @@ public class raspberry {
     @Path("/updateRaspberryList")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the ip address of the raspberry pi (Dont use this)")
-    public String updateRaspberryList(@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_ip") Long rasp_ip){
+    public String updateRaspberryList(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("rasp_ip") String rasp_ip){
 
         try {
             obj = new JSONObject();

@@ -36,7 +36,7 @@ public class container {
     @Path("/addContainer")
     @Produces("application/json")
     @ApiOperation(value = "Testing purpose only (Dont use this)")
-    public String addContainer(@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("quantity") String quantity){
+    public String addContainer(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("quantity") String quantity){
 
         try {
             obj= new JSONObject();
@@ -66,7 +66,7 @@ public class container {
     @Path("/getAllContainerDetails")
     @Produces("application/json")
     @ApiOperation(value = "This api returns the details of all the container connected to a particular raspberry pi")
-    public String getAllContainerDetails(@QueryParam("rasp_id") Long rasp_serial_no)
+    public String getAllContainerDetails(@QueryParam("rasp_id") String rasp_serial_no)
     {
 
         try {
@@ -109,7 +109,7 @@ public class container {
     @Path("/updateContainerDetails")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the name of the container attached to a particular raspberry")
-    public String updateContainerDetails(@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name)
+    public String updateContainerDetails(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name)
     {
 
         try {
