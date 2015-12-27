@@ -174,7 +174,7 @@ public class raspberry {
     }
 
     @GET
-    @Path("/checkRaspberry")
+    @Path("/updateRaspberryList")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the ip address of the raspberry pi (Dont use this)")
     public String updateRaspberryList(@QueryParam("rasp_id") Long rasp_serial_no,@QueryParam("rasp_ip") Long rasp_ip){
