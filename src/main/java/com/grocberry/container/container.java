@@ -36,7 +36,7 @@ public class container {
     @Path("/addContainer")
     @Produces("application/json")
     @ApiOperation(value = "Testing purpose only (Dont use this)")
-    public String addContainer(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("quantity") String quantity){
+    public String addContainer(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("quantity") String quantity,@QueryParam("rasp_id") String container_type){
 
         try {
             obj= new JSONObject();
@@ -44,7 +44,8 @@ public class container {
                 Document doc = new Document("rasp_serial_no", rasp_serial_no)
                         .append("container_id",container_id)
                         .append("container_name", container_name)
-                        .append("quantity", quantity);
+                        .append("quantity", quantity)
+                        .append("container_type", quantity);
                 collection.insertOne(doc);
                 obj.put("message", "true");
                 return String.valueOf(obj);
@@ -84,6 +85,7 @@ public class container {
                     obj.put("container" + (flag+1) + "_id", document.get("container_id"));
                     obj.put("container" + (flag+1) + "_name", document.get("container_name"));
                     obj.put("container" + (flag+1) + "_quantity", document.get("quantity"));
+                    obj.put("container" + (flag+1) + "_type", document.get("container_type"));
                     flag++;
                 }
 
