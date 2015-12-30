@@ -36,7 +36,7 @@ public class container {
     @Path("/addContainer")
     @Produces("application/json")
     @ApiOperation(value = "Testing purpose only (Dont use this)")
-    public String addContainer(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("quantity") String quantity,@QueryParam("rasp_id") String container_type){
+    public String addContainer(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("quantity") String quantity,@QueryParam("container_type") String container_type){
 
         try {
             obj= new JSONObject();
