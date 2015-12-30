@@ -45,7 +45,7 @@ public class container {
                         .append("container_id",container_id)
                         .append("container_name", container_name)
                         .append("quantity", quantity)
-                        .append("container_type", quantity);
+                        .append("container_type", container_type);
                 collection.insertOne(doc);
                 obj.put("message", "true");
                 return String.valueOf(obj);
