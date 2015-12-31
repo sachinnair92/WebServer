@@ -111,13 +111,13 @@ public class container {
     @Path("/updateContainerDetails")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the name of the container attached to a particular raspberry")
-    public String updateContainerDetails(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name)
+    public String updateContainerDetails(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("container_type") String container_type)
     {
 
         try {
             obj = new JSONObject();
             if (rasp_serial_no != null && container_id != null && container_name !=null) {
-                UpdateResult ur = collection.updateOne(new Document("rasp_serial_no", rasp_serial_no).append("container_id", container_id), new Document("$set", new Document("container_name", container_name)));
+                UpdateResult ur = collection.updateOne(new Document("rasp_serial_no", rasp_serial_no).append("container_id", container_id), new Document("$set", new Document("container_name", container_name).append("container_type", container_type)));
 
                 if (ur.getModifiedCount() != 0) {
                     obj.put("message", "true");
