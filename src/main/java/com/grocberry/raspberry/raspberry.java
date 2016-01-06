@@ -38,7 +38,7 @@ public class raspberry {
 
 
 
-    @GET
+    @POST
     @Path("/addRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api adds new raspberry pi for a specific user (Before adding check if raspberry is added to server)")
@@ -84,7 +84,7 @@ public class raspberry {
         return String.valueOf(obj);
     }
 
-    @GET
+    @DELETE
     @Path("/removeRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api removes raspberry pi")
@@ -108,7 +108,7 @@ public class raspberry {
     }
 
 
-    @GET
+    @PUT
     @Path("/editRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api edits the name of a particular raspberry pi")
@@ -173,7 +173,7 @@ public class raspberry {
         return String.valueOf(obj);
     }
 
-    @GET
+    @PUT
     @Path("/updateRaspberryList")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the ip address of the raspberry pi (Dont use this)")

@@ -12,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import org.bson.Document;
 import org.json.JSONObject;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 
 /**
  * Created by Voodoo on 15/12/15.
@@ -32,7 +29,7 @@ public class container {
     boolean iscontaineradded=false;
 
 
-    @GET
+    @POST
     @Path("/addContainer")
     @Produces("application/json")
     @ApiOperation(value = "Testing purpose only (Dont use this)")
@@ -107,7 +104,7 @@ public class container {
     }
 
 
-    @GET
+    @POST
     @Path("/updateContainerDetails")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the name of the container attached to a particular raspberry")
