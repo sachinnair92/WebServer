@@ -202,6 +202,10 @@ public class raspberry {
                     if (ur.getModifiedCount() != 0) {
                         obj.put("message", "true");
                         return String.valueOf(obj);
+                    }else
+                    {
+                        obj.put("message", "NoModification");
+                        return String.valueOf(obj);
                     }
                 }
 

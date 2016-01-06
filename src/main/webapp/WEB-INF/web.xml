@@ -55,7 +55,7 @@
     </servlet>
     
     <welcome-file-list>
-        <welcome-file>/docs/swagger.html</welcome-file>
+        <welcome-file>/swagger.html</welcome-file>
     </welcome-file-list>
 
 
