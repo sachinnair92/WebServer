@@ -108,7 +108,7 @@ public class raspberry {
     }
 
 
-    @PUT
+    @POST
     @Path("/editRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api edits the name of a particular raspberry pi")
@@ -173,7 +173,7 @@ public class raspberry {
         return String.valueOf(obj);
     }
 
-    @PUT
+    @POST
     @Path("/updateRaspberryList")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the ip address of the raspberry pi (Dont use this)")
