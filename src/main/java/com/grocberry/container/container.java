@@ -33,7 +33,7 @@ public class container {
     @Path("/addContainer")
     @Produces("application/json")
     @ApiOperation(value = "Testing purpose only (Dont use this)")
-    public String addContainer(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("quantity") String quantity,@QueryParam("container_type") String container_type){
+    public String addContainer(@FormParam("rasp_id") String rasp_serial_no,@FormParam("container_id") String container_id,@FormParam("container_name") String container_name,@FormParam("quantity") String quantity,@FormParam("container_type") String container_type){
 
         try {
             obj= new JSONObject();
@@ -108,7 +108,7 @@ public class container {
     @Path("/updateContainerDetails")
     @Produces("application/json")
     @ApiOperation(value = "This api updates the name of the container attached to a particular raspberry")
-    public String updateContainerDetails(@QueryParam("rasp_id") String rasp_serial_no,@QueryParam("container_id") String container_id,@QueryParam("container_name") String container_name,@QueryParam("container_type") String container_type)
+    public String updateContainerDetails(@FormParam("rasp_id") String rasp_serial_no,@FormParam("container_id") String container_id,@FormParam("container_name") String container_name,@FormParam("container_type") String container_type)
     {
 
         try {
