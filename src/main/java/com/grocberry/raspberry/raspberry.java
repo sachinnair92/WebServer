@@ -84,7 +84,7 @@ public class raspberry {
         return String.valueOf(obj);
     }
 
-    @DELETE
+    @POST
     @Path("/removeRaspberry")
     @Produces("application/json")
     @ApiOperation(value = "This api removes raspberry pi")
