@@ -102,7 +102,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
             String Percentage="0";
 
-            String temp=val[3].replaceAll("cm""");
+            String temp=val[3].replaceAll("cm","");
             float x=Float.parseFloat(temp);
             if (val[4].equals("small")) {
 
