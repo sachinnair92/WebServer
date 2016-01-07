@@ -114,10 +114,11 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
             logger.info("Temp: "+temp);
             float x=Float.parseFloat(temp);
             logger.info("x: "+x);
+            float per;
             if (val[4].equals("small")) {
 
                 x=(10.30f-x);
-                float per=((x / 10.14f) * 100);
+                per=((x / 10.14f) * 100);
                 Percentage=String.valueOf(per);
                 if(per>100)
                {
@@ -133,12 +134,13 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
                 logger.info("Medium: ");
                 x=(14.37f-x);
-                float per=((x / 14.37f) * 100);
+                per=((x / 14.37f) * 100);
+                logger.info("perrrrrrrrr= "+per);
                 Percentage=String.valueOf(per);
                 if(per>100)
                 {
                     Percentage="100";
-                }else if(per<3)
+                }else if(per<5)
                 {
                     Percentage="0";
                 }
@@ -147,7 +149,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
             } else if (val[4].equals("large")) {
 
                 x=(21.68f-x);
-                float per=((x / 21.68f) * 100);
+                per=((x / 21.68f) * 100);
                 Percentage=String.valueOf(per);
                 if(per>100)
                 {
@@ -162,26 +164,11 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
             }
 
 
-
-            logger.info("compairing "+msgList[0]+ "with "+msgList[1]+" result is "+  Float.compare(msgList[0], msgList[1]));
-
-            if(Float.compare(msgList[0], msgList[1])==0)
-           {
-                logger.info("innnn") ;
-               logger.info("going to add "+Percentage);
                addContainer(Contid, rasp_id, Percentage);
-             msgList=new Float[2];
-                index=0;
-            }else
-            {
-                logger.info("lseee");
-                msgList[index]=Float.parseFloat(Percentage);
-               logger.info("index is "+index);
-                index=((index+1)%2);
-            }
-
-
-
+//             msgList=new Float[2];
+//               msgList[0]=-1f;
+//               msgList[1]=-2f;
+//                index=0;
         }
 
 
@@ -193,6 +180,8 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
     public void addContainer(String Cont_id,String rasp_id,String Quan){
 
+
+        logger.info("helloooozzzzzzzzz INnnnnnnnnnndfjkndsfikbnafskobefwoeswhnlohlophjlohjglor4hjnlohgto;htw4ihyoho;i4hjohyrw4ioofrw4hhop");
         MongoCollection<Document> collection = db.getCollection("containers");
         try {
             obj= new JSONObject();
@@ -208,13 +197,15 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
             });
 
-
+            logger.info("is added " + is_registered);
 
             if(is_registered==1)
             {
                 UpdateResult ur = collection.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("quantity", Quan )));
-
+                logger.info("is registered inn");
             }else{
+
+                logger.info("is registered else");
 
                 Document doc = new Document("rasp_serial_no", rasp_id)
                         .append("container_id",Cont_id)
@@ -251,7 +242,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
     public void UpdateRaspberry(){
         try {
 
-
+            logger.info("Helllllllloooooooozzzzzzzzzzzzzz-------------------1111111");
             MongoCollection<Document> collection1 = db.getCollection("raspberryList");
             FindIterable<Document> iterable = collection1.find(new Document("rasp_serial_no", rasp_id));
             is_added=0;
@@ -262,9 +253,9 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
                 }
 
             });
-
+            logger.info("Helllllllloooooooozzzzzzzzzzz4zzzz-------------------44444444444444444444");
             if(is_added==1) {
-
+                logger.info("Helllllllloooooooozzzzzzzzzzzzzzz-------------------12222222");
                 if (rasp_id!= null && rasp_ip!=null) {
                     UpdateResult ur = collection1.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("rasp_ip", rasp_ip)));
                     ur = collection1.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("Thread_id",Thread.currentThread().getId())));
@@ -273,7 +264,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
             }
             else
             {
-
+                logger.info("Helllllllloooooooozzzzzzzzzzzzzzz-------------------3333333333333");
                 if (rasp_id != null && rasp_ip!=null) {
                     Document doc = new Document("rasp_serial_no", rasp_id)
                             .append("rasp_ip", rasp_ip).append("Thread_id", String.valueOf(Thread.currentThread().getId()));
@@ -287,6 +278,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
         }
         catch (Exception e)
         {
+            logger.info("Helllllllloooooooozzzzzzzzzzzzzzz-------------------6656666555656565656565656");
             e.printStackTrace();
         }
     }
