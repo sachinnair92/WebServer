@@ -42,7 +42,6 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
         MemoryPersistence persistence = new MemoryPersistence();
 
         UpdateRaspberry();
-        msgList=new String[3];
         while(!Thread.currentThread().isInterrupted()) {
             try {
                 MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
@@ -58,6 +57,9 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
                 int subQoS = 0;
                 sampleClient.subscribe(topic, subQoS);
+                msgList=new Float[2];
+                msgList[0]=-1f;
+                msgList[1]=-2f;
                 logger.info("Subscribed");
                 //sampleClient.subscribe(topic);
                 while (!Thread.currentThread().isInterrupted()) {
@@ -82,7 +84,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
     }
 
-    String msgList[];
+    static Float msgList[];
     int index=0;
 
     @Override
@@ -93,17 +95,25 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
        logger.info("Topic: " + s + " Message: " + msg);
 
 
-        String val[]=msg.split(" ");
+
+        logger.info("msg is "+msg);        String val[]=msg.split(" ");
 
 
-        if(!msg.contains("Sending") ){
+        if(!msg.contains("Publishing Sensor Data") ){
+
 
             String Contid=val[1].replaceAll(":","");
-
+            logger.info("Contid: "+Contid);
             String Percentage="0";
-
-            String temp=val[3].replaceAll("cm","");
+            logger.info("size is"+val.length);
+            for(int k=0;k<val.length;k++)
+            {
+               logger.info("k:"+k+" val is "+val[k]);
+            }
+            String temp=val[3].replaceAll("cm", "");
+            logger.info("Temp: "+temp);
             float x=Float.parseFloat(temp);
+            logger.info("x: "+x);
             if (val[4].equals("small")) {
 
                 x=(10.30f-x);
@@ -112,26 +122,28 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
                 if(per>100)
                {
                     Percentage="100";
-                }else if(per<1)
+                }else if(per<3)
                 {
                     Percentage="0";
                 }
 
-
+                logger.info("per1= "+per);
 
             } else if (val[4].equals("medium")) {
 
+                logger.info("Medium: ");
                 x=(14.37f-x);
                 float per=((x / 14.37f) * 100);
                 Percentage=String.valueOf(per);
                 if(per>100)
                 {
                     Percentage="100";
-                }else if(per<1)
+                }else if(per<3)
                 {
                     Percentage="0";
                 }
 
+                logger.info("per2= "+per);
             } else if (val[4].equals("large")) {
 
                 x=(21.68f-x);
@@ -140,25 +152,32 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
                 if(per>100)
                 {
                     Percentage="100";
-                }else if(per<1)
+               }else if(per<3)
                 {
                     Percentage="0";
                 }
-
+                logger.info("per3= "+per);
             } else {
                 return;
             }
 
-            if(msgList[0].equals(msgList[1]) && msgList[1].equals(msgList[2]))
-            {
-             addContainer(Contid,rasp_id,Percentage);
-             msgList=new String[3];
+
+
+            logger.info("compairing "+msgList[0]+ "with "+msgList[1]+" result is "+  Float.compare(msgList[0], msgList[1]));
+
+            if(Float.compare(msgList[0], msgList[1])==0)
+           {
+                logger.info("innnn") ;
+               logger.info("going to add "+Percentage);
+               addContainer(Contid, rasp_id, Percentage);
+             msgList=new Float[2];
                 index=0;
             }else
             {
-
-                msgList[index]=Percentage;
-                index=((index+1)%3);
+                logger.info("lseee");
+                msgList[index]=Float.parseFloat(Percentage);
+               logger.info("index is "+index);
+                index=((index+1)%2);
             }
 
 
@@ -193,11 +212,11 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
             if(is_registered==1)
             {
-                UpdateResult ur = collection.updateOne(new Document("rasp_id", rasp_id), new Document("$set", new Document("quantity", Quan )));
+                UpdateResult ur = collection.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("quantity", Quan )));
 
             }else{
 
-                Document doc = new Document("rasp_id", rasp_id)
+                Document doc = new Document("rasp_serial_no", rasp_id)
                         .append("container_id",Cont_id)
                         .append("container_name", "null")
                         .append("quantity", Quan)
@@ -234,7 +253,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
 
             MongoCollection<Document> collection1 = db.getCollection("raspberryList");
-            FindIterable<Document> iterable = collection1.find(new Document("rasp_id", rasp_id));
+            FindIterable<Document> iterable = collection1.find(new Document("rasp_serial_no", rasp_id));
             is_added=0;
             iterable.forEach(new Block<Document>() {
                 @Override
@@ -247,8 +266,8 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
             if(is_added==1) {
 
                 if (rasp_id!= null && rasp_ip!=null) {
-                    UpdateResult ur = collection1.updateOne(new Document("rasp_id", rasp_id), new Document("$set", new Document("rasp_ip", rasp_ip)));
-                    ur = collection1.updateOne(new Document("rasp_id", rasp_id), new Document("$set", new Document("Thread_id",Thread.currentThread().getId())));
+                    UpdateResult ur = collection1.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("rasp_ip", rasp_ip)));
+                    ur = collection1.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("Thread_id",Thread.currentThread().getId())));
 
                 }
             }
@@ -256,7 +275,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
             {
 
                 if (rasp_id != null && rasp_ip!=null) {
-                    Document doc = new Document("rasp_id", rasp_id)
+                    Document doc = new Document("rasp_serial_no", rasp_id)
                             .append("rasp_ip", rasp_ip).append("Thread_id", String.valueOf(Thread.currentThread().getId()));
                     collection1.insertOne(doc);
 
