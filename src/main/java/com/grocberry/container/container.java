@@ -29,34 +29,34 @@ public class container {
     boolean iscontaineradded=false;
 
 
-    @POST
-    @Path("/addContainer")
-    @Produces("application/json")
-    @ApiOperation(value = "Testing purpose only (Dont use this)")
-    public String addContainer(@FormParam("rasp_id") String rasp_serial_no,@FormParam("container_id") String container_id,@FormParam("container_name") String container_name,@FormParam("quantity") String quantity,@FormParam("container_type") String container_type){
-
-        try {
-            obj= new JSONObject();
-            if (rasp_serial_no != null && container_id != null && quantity != null) {
-                Document doc = new Document("rasp_serial_no", rasp_serial_no)
-                        .append("container_id",container_id)
-                        .append("container_name", container_name)
-                        .append("quantity", quantity)
-                        .append("container_type", container_type);
-                collection.insertOne(doc);
-                obj.put("message", "true");
-                return String.valueOf(obj);
-            }
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        obj.put("message", "false");
-        return String.valueOf(obj);
-
-    }
+//    @POST
+//    @Path("/addContainer")
+//    @Produces("application/json")
+//    @ApiOperation(value = "Testing purpose only (Dont use this)")
+//    public String addContainer(@FormParam("rasp_id") String rasp_serial_no,@FormParam("container_id") String container_id,@FormParam("container_name") String container_name,@FormParam("quantity") String quantity,@FormParam("container_type") String container_type){
+//
+//        try {
+//            obj= new JSONObject();
+//            if (rasp_serial_no != null && container_id != null && quantity != null) {
+//                Document doc = new Document("rasp_serial_no", rasp_serial_no)
+//                        .append("container_id",container_id)
+//                        .append("container_name", container_name)
+//                        .append("quantity", quantity)
+//                        .append("container_type", container_type);
+//                collection.insertOne(doc);
+//                obj.put("message", "true");
+//                return String.valueOf(obj);
+//            }
+//
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        obj.put("message", "false");
+//        return String.valueOf(obj);
+//
+//    }
 
 
 
