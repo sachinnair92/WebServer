@@ -14,10 +14,10 @@
 
         </init-param>
 
-        <init-param>
-            <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-            <param-value>com.grocberry.Filter.OAuthServerFilter</param-value>
-        </init-param>
+        <!--<init-param>-->
+            <!--<param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>-->
+            <!--<param-value>com.grocberry.Filter.OAuthServerFilter</param-value>-->
+        <!--</init-param>-->
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>
