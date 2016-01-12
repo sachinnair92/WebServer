@@ -33,7 +33,7 @@ import static com.mongodb.client.model.Filters.eq;
  */
 @Api(value = "Raspberry")
 @Path("/raspberry/")
-public class raspberry implements MqttCallback {
+public class raspberry {
     MongoClientURI connectionString = new MongoClientURI("mongodb://voodoo:722446@ds059804.mongolab.com:59804/grocberry");
     MongoClient mongoClient = new MongoClient(connectionString);
     MongoDatabase db = mongoClient.getDatabase(connectionString.getDatabase());
@@ -299,81 +299,6 @@ public class raspberry implements MqttCallback {
     }
 
     private final Logger logger = Logger.getLogger(String.valueOf(raspberry.class));
-
-    @GET
-    @Path("/Testing")
-    @Produces("application/json")
-
-    public void test(@QueryParam("user_id") String user_id) {
-        String topic        = "outTopic";
-        //String content      = "hello from voodoo";
-        //int qos             = 2;
-        String broker       = "tcp://101.63.94.87:1883";
-        String clientId     = "Voodoo Pc";
-        MemoryPersistence persistence = new MemoryPersistence();
-
-        try {
-            MqttClient sampleClient = new MqttClient(broker, clientId, persistence);
-            MqttConnectOptions connOpts = new MqttConnectOptions();
-            connOpts.setCleanSession(true);
-            logger.info("Connecting to broker: " + broker);
-            sampleClient.setCallback(this);
-            sampleClient.connect(connOpts);
-            logger.info("Connected");
-            //System.out.println("Publishing message: "+content);
-            //MqttMessage message = new MqttMessage(content.getBytes());
-            //message.setQos(qos);
-
-            int subQoS = 0;
-            sampleClient.subscribe(topic, subQoS);
-            logger.info("Subscribed");
-            //sampleClient.subscribe(topic);
-            while(true){
-
-            }
-            //System.out.println("Message published");
-        } catch(MqttException me) {
-            logger.info("reason " + me.getReasonCode());
-            logger.info("msg " + me.getMessage());
-            logger.info("loc " + me.getLocalizedMessage());
-            logger.info("cause " + me.getCause());
-            logger.info("excep "+me);
-            me.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void connectionLost(Throwable throwable) {
-
-    }
-
-    @Override
-    public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
-        logger.info("Topic: " + s + " Message: " + new String(mqttMessage.getPayload()));
-    }
-
-    @Override
-    public void deliveryComplete(IMqttDeliveryToken iMqttDeliveryToken) {
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
