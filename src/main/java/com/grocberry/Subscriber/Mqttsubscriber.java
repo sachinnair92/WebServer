@@ -201,7 +201,10 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
             if(is_registered==1)
             {
-                UpdateResult ur = collection.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("quantity", Quan )));
+                //UpdateResult ur = collection.updateOne(new Document("rasp_serial_no", rasp_id), new Document("$set", new Document("quantity", Quan )));
+
+                UpdateResult ur = collection.updateOne(new Document("rasp_serial_no", rasp_id).append("container_id", Cont_id), new Document("$set", new Document("quantity", Quan )));
+
                 logger.info("is registered inn");
             }else{
 
