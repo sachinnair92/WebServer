@@ -110,7 +110,7 @@ public class container {
                     }
                     else
                     {
-                        obj.put("container" + (flag+1) + "_quantity", document.get("quantity"));
+                        obj.put("container" + (flag+1) + "_quantity", "0");
                     }
                     flag++;
                 }
