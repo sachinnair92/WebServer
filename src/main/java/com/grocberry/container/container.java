@@ -123,7 +123,7 @@ public class container {
                 obj.put("container" + (x+1) + "_quantity", Quan1[x]);
             }
 
-            obj.put("no_of_container", No_of_Container);
+            obj.put("no_of_container", flag);
             System.out.print(iscontaineradded);
             if (iscontaineradded) {
                 return String.valueOf(obj);
