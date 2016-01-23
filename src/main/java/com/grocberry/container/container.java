@@ -125,7 +125,7 @@ public class container {
 
             obj.put("no_of_container", No_of_Container);
             System.out.print(iscontaineradded);
-            if (No_of_Container>0) {
+            if (iscontaineradded) {
                 return String.valueOf(obj);
             } else {
                 obj = new JSONObject();
