@@ -95,7 +95,6 @@ public class container {
                     obj.put("container" + (flag+1) + "_id", document.get("container_id"));
                     obj.put("container" + (flag+1) + "_name", document.get("container_name"));
                     obj.put("container" + (flag+1) + "_type", document.get("container_type"));
-
                     int pos=-1;
                     for(int x=0;x<No_of_Container;x++)
                     {
@@ -116,12 +115,6 @@ public class container {
                 }
 
             });
-
-            for(int x=0;x<No_of_Container;x++)
-            {
-                obj.put("container" + (x+1) + "_id", Cont_id1[x]);
-                obj.put("container" + (x+1) + "_quantity", Quan1[x]);
-            }
 
             obj.put("no_of_container", flag);
             System.out.print(iscontaineradded);
