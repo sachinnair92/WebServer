@@ -1,5 +1,6 @@
 package com.grocberry.Subscriber;
 
+import com.grocberry.container.container;
 import com.grocberry.raspberry.raspberry;
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -61,6 +62,9 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
                 msgList[0]=-1f;
                 msgList[1]=-2f;
                 logger.info("Subscribed");
+                Cont_id1=new String[1];
+                rasp_id1=new String[1];
+                Quan1=new String[1];
                 //sampleClient.subscribe(topic);
                 while (!Thread.currentThread().isInterrupted()) {
 
@@ -86,6 +90,12 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
     static Float msgList[];
     int index=0;
+    static String Cont_id1[];
+    static String rasp_id1[];
+    static String Quan1[];
+    static int No_of_Container=0;
+
+
 
     @Override
     public void messageArrived(String s, MqttMessage mqttMessage) throws Exception {
@@ -164,7 +174,8 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
             }
 
 
-               addContainer(Contid, rasp_id, Percentage);
+            addContainer(Contid, rasp_id, Percentage);
+            addContainer1(Contid, rasp_id, Percentage);
 //             msgList=new Float[2];
 //               msgList[0]=-1f;
 //               msgList[1]=-2f;
@@ -177,6 +188,52 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
 
     int is_registered=0;
+
+
+
+    public void addContainer1(String Cont_id,String rasp_id,String Quan){
+
+        int flag=0;
+        for(int i=0;i<No_of_Container;i++)
+        {
+            if(Cont_id1[i].equals(Cont_id))
+            {
+                Quan1[i]=Quan;
+                flag=1;
+            }
+        }
+
+        if(flag==0)
+        {
+            String Cont_id2[]=new String[No_of_Container+1];
+            String rasp_id2[]=new String[No_of_Container+1];
+            String Quan2[]=new String[No_of_Container+1];
+            for(int j=0;j<No_of_Container;j++)
+            {
+                Cont_id2[j]=Cont_id1[j];
+                rasp_id2[j]=rasp_id1[j];
+                Quan2[j]=rasp_id1[j];
+            }
+            Cont_id2[No_of_Container]=Cont_id;
+            rasp_id2[No_of_Container]=rasp_id;
+            Quan2[No_of_Container]=Quan;
+
+            Cont_id1=Cont_id2;
+            rasp_id1=rasp_id2;
+            Quan1=Quan2;
+            No_of_Container++;
+
+
+        }
+
+        container cnt=new container();
+        cnt.set_details(Cont_id1,rasp_id1,Quan1,No_of_Container);
+
+
+    }
+
+
+
 
     public void addContainer(String Cont_id,String rasp_id,String Quan){
 
