@@ -73,65 +73,6 @@ public class container {
     }
 
 
-    @GET
-    @Path("/getAllContainerDetails")
-    @Produces("application/json")
-    @ApiOperation(value = "This api returns the details of all the container connected to a particular raspberry pi")
-    public String getAllContainerDetails(@QueryParam("rasp_id") String rasp_serial_no)
-    {
-
-        try {
-            FindIterable<Document> iterable = collection.find(new Document("rasp_serial_no", rasp_serial_no));
-            flag=0;
-            obj = new JSONObject();
-            iterable.forEach(new Block<Document>() {
-                @Override
-                public void apply(final Document document) {
-                    iscontaineradded = true;
-                    if(flag==0)
-                    {
-                        obj.put("rasp_serial_no", document.get("rasp_serial_no"));
-                    }
-                    obj.put("container" + (flag+1) + "_id", document.get("container_id"));
-                    obj.put("container" + (flag+1) + "_name", document.get("container_name"));
-                    obj.put("container" + (flag+1) + "_type", document.get("container_type"));
-                    int pos=-1;
-                    for(int x=0;x<No_of_Container;x++)
-                    {
-                        if(Cont_id1[x].equals(document.get("container_id")))
-                        {
-                            pos=x;
-                        }
-                    }
-                    if(pos !=-1)
-                    {
-                        obj.put("container" + (flag+1) + "_quantity", Quan1[pos]);
-                    }
-                    else
-                    {
-                        obj.put("container" + (flag+1) + "_quantity", "0");
-                    }
-                    flag++;
-                }
-
-            });
-
-            obj.put("no_of_container", flag);
-            System.out.print(iscontaineradded);
-            if (iscontaineradded) {
-                return String.valueOf(obj);
-            } else {
-                obj = new JSONObject();
-                obj.put("message", "No container added");
-                return String.valueOf(obj);
-            }
-        } catch (Exception e) {
-            obj = new JSONObject();
-            obj.put("message", "Some error occurred");
-            return String.valueOf(obj);
-        }
-    }
-
 //    @GET
 //    @Path("/getAllContainerDetails")
 //    @Produces("application/json")
@@ -153,12 +94,28 @@ public class container {
 //                    }
 //                    obj.put("container" + (flag+1) + "_id", document.get("container_id"));
 //                    obj.put("container" + (flag+1) + "_name", document.get("container_name"));
-//                    obj.put("container" + (flag+1) + "_quantity", document.get("quantity"));
 //                    obj.put("container" + (flag+1) + "_type", document.get("container_type"));
+//                    int pos=-1;
+//                    for(int x=0;x<No_of_Container;x++)
+//                    {
+//                        if(Cont_id1[x].equals(document.get("container_id")))
+//                        {
+//                            pos=x;
+//                        }
+//                    }
+//                    if(pos !=-1)
+//                    {
+//                        obj.put("container" + (flag+1) + "_quantity", Quan1[pos]);
+//                    }
+//                    else
+//                    {
+//                        obj.put("container" + (flag+1) + "_quantity", "0");
+//                    }
 //                    flag++;
 //                }
 //
 //            });
+//
 //            obj.put("no_of_container", flag);
 //            System.out.print(iscontaineradded);
 //            if (iscontaineradded) {
@@ -173,8 +130,49 @@ public class container {
 //            obj.put("message", "Some error occurred");
 //            return String.valueOf(obj);
 //        }
+//    }
 
+    @GET
+    @Path("/getAllContainerDetails")
+    @Produces("application/json")
+    @ApiOperation(value = "This api returns the details of all the container connected to a particular raspberry pi")
+    public String getAllContainerDetails(@QueryParam("rasp_id") String rasp_serial_no) {
 
+        try {
+            FindIterable<Document> iterable = collection.find(new Document("rasp_serial_no", rasp_serial_no));
+            flag = 0;
+            obj = new JSONObject();
+            iterable.forEach(new Block<Document>() {
+                @Override
+                public void apply(final Document document) {
+                    iscontaineradded = true;
+                    if (flag == 0) {
+                        obj.put("rasp_serial_no", document.get("rasp_serial_no"));
+                    }
+                    obj.put("container" + (flag + 1) + "_id", document.get("container_id"));
+                    obj.put("container" + (flag + 1) + "_name", document.get("container_name"));
+                    obj.put("container" + (flag + 1) + "_quantity", document.get("quantity"));
+                    obj.put("container" + (flag + 1) + "_type", document.get("container_type"));
+                    flag++;
+                }
+
+            });
+            obj.put("no_of_container", flag);
+            System.out.print(iscontaineradded);
+            if (iscontaineradded) {
+                return String.valueOf(obj);
+            } else {
+                obj = new JSONObject();
+                obj.put("message", "No container added");
+                return String.valueOf(obj);
+            }
+        } catch (Exception e) {
+            obj = new JSONObject();
+            obj.put("message", "Some error occurred");
+            return String.valueOf(obj);
+        }
+
+    }
 
 
     @POST

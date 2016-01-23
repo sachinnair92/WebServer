@@ -175,7 +175,7 @@ public class Mqttsubscriber implements Runnable,MqttCallback {
 
 
             addContainer(Contid, rasp_id, Percentage);
-            addContainer1(Contid, rasp_id, Percentage);
+        //    addContainer1(Contid, rasp_id, Percentage);
 //             msgList=new Float[2];
 //               msgList[0]=-1f;
 //               msgList[1]=-2f;
